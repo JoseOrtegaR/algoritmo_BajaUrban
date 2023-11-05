@@ -8,15 +8,21 @@ def get_imgs_b64(imagen_ref_base64, imagenes_base64):
     imagenes_base64_fila0 = [fila[0] for fila in imagenes_base64]
     imagenes_base64_fila1 = [fila[1] for fila in imagenes_base64]
 
+
     #imagenes_decodificadas = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64]
 
-    #imagenes_referencia = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64_fila0]
-    imagenes_referencia = []
-    for imagen_base64 in imagenes_base64_fila0:
-        imagen_decodificada = base64.b64decode(imagen_base64)
-        imagenes_referencia.append(imagen_decodificada)
 
-    img = base64.b64decode(imagen_ref_base64)
+    #imagenes_referencia = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64_fila0]
+    #imagenes_referencia = []
+    #for imagen_base64 in imagenes_base64_fila0:
+    #    imagen_decodificada = base64.b64decode(imagen_base64)
+    #    imagenes_referencia.append(imagen_decodificada)
+
+    imagenes_referencia = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64]
+
+
+    img_encoded = base64.b64decode(imagen_ref_base64)
+    img = cv2.imdecode(np.frombuffer(img_encoded, np.uint8), cv2.IMREAD_COLOR)
 
     # Calcula la similitud con cada imagen de referencia y encuentra la máxima
     similitudes = [calcular_similitud(imagen_ref, img) for imagen_ref in imagenes_referencia]
