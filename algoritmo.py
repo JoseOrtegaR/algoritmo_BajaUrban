@@ -8,16 +8,6 @@ def get_imgs_b64(imagen_ref_base64, imagenes_base64):
     imagenes_base64_fila0 = [fila[0] for fila in imagenes_base64]
     imagenes_base64_fila1 = [fila[1] for fila in imagenes_base64]
 
-
-    #imagenes_decodificadas = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64]
-
-
-    #imagenes_referencia = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64_fila0]
-    #imagenes_referencia = []
-    #for imagen_base64 in imagenes_base64_fila0:
-    #    imagen_decodificada = base64.b64decode(imagen_base64)
-    #    imagenes_referencia.append(imagen_decodificada)
-
     imagenes_referencia = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64]
 
 
