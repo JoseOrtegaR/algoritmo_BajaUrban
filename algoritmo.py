@@ -6,10 +6,16 @@ import base64
 def get_imgs_b64(imagen_ref_base64, imagenes_base64):
 
     imagenes_base64_fila0 = [fila[0] for fila in imagenes_base64]
+    imagenes_base64_fila1 = [fila[1] for fila in imagenes_base64]
 
     #imagenes_decodificadas = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64]
 
-    imagenes_referencia = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64_fila0]
+    #imagenes_referencia = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64_fila0]
+    imagenes_referencia = []
+    for imagen_base64 in imagenes_base64_fila0:
+        imagen_decodificada = base64.b64decode(imagen_base64)
+        imagenes_referencia.append(imagen_decodificada)
+
     img = base64.b64decode(imagen_ref_base64)
 
     # Calcula la similitud con cada imagen de referencia y encuentra la máxima
@@ -17,7 +23,7 @@ def get_imgs_b64(imagen_ref_base64, imagenes_base64):
     max_similitud = max(similitudes)
     if(max_similitud > 50):
         indice_max_similitud = similitudes.index(max_similitud)  # +1 para que coincida con la imagen
-        return indice_max_similitud
+        return imagenes_base64_fila1[indice_max_similitud]
     else:
         return None
 
@@ -38,4 +44,3 @@ def calcular_similitud(img1, img2):
 
     similitud = (len(good_matches) / len(keypoints_img1)) * 100 if len(keypoints_img1) > 0 else 0
     return similitud
-
