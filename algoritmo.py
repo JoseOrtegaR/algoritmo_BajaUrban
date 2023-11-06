@@ -3,20 +3,6 @@ import numpy as np
 import base64
 import json
 
-def decode_base64_image(image_base64):
-    try:
-        # Agregar caracteres de relleno si es necesario
-        while len(image_base64) % 4 != 0:
-            image_base64 += '='
-        
-        decoded_data = base64.b64decode(image_base64)
-        image = cv2.imdecode(np.frombuffer(decoded_data, np.uint8), cv2.IMREAD_GRAYSCALE)
-        return image
-    except Exception as e:
-        print(f"Error al decodificar la imagen: {str(e)}")
-        return None
-
-
 def get_imgs_b64(imagen_ref_base64, imagenes_base64):
 
     image_data = imagen_ref_base64.split(",")[1]
