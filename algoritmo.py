@@ -2,6 +2,20 @@ import cv2
 import numpy as np
 import base64
 
+def decode_base64_image(image_base64):
+    try:
+        # Agregar caracteres de relleno si es necesario
+        while len(image_base64) % 4 != 0:
+            image_base64 += '='
+        
+        decoded_data = base64.b64decode(image_base64)
+        image = cv2.imdecode(np.frombuffer(decoded_data, np.uint8), cv2.IMREAD_GRAYSCALE)
+        return image
+    except Exception as e:
+        print(f"Error al decodificar la imagen: {str(e)}")
+        return None
+
+
 def get_imgs_b64(imagen_ref_base64, imagenes_base64):
 
     #imagenes_base64_fila0 = [fila[0] for fila in imagenes_base64]
@@ -9,9 +23,10 @@ def get_imgs_b64(imagen_ref_base64, imagenes_base64):
 
     #imagenes_referencia = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64_fila0]
     
-    imagenes_base64_data = [item['image_base64'] for item in imagenes_base64]
+    #imagenes_base64_data = [item['image_base64'] for item in imagenes_base64]
 
-    imagenes_referencia = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64_data]
+    #imagenes_referencia = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64_data]
+    imagenes_referencia = [decode_base64_image(item['image_base64']) for item in imagenes_base64]
     
     #img_encoded = base64.b64decode(imagen_ref_base64)
     #img = cv2.imdecode(np.frombuffer(img_encoded, np.uint8), cv2.IMREAD_COLOR)
