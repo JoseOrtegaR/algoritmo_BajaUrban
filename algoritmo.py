@@ -13,7 +13,7 @@ def decode_base64_image(image_base64):
         return image
     except Exception as e:
         print(f"Error al decodificar la imagen: {str(e)}")
-        return None
+        return [None, None, None]
 
 
 def get_imgs_b64(imagen_ref_base64, imagenes_base64):
