@@ -11,7 +11,6 @@ def get_imgs_b64(imagen_ref_base64, imagenes_base64_json):
 
     similitud = calcular_similitud(img, img)
 
-    data_list = json.loads(imagenes_base64)
 
     for item in data_list:
         image_base64 = item['image_base64']
