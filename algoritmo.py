@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import base64
+import json
 
 def decode_base64_image(image_base64):
     try:
@@ -24,6 +25,9 @@ def get_imgs_b64(imagen_ref_base64, imagenes_base64):
 
     similitud = calcular_similitud(img, img)
 
+    data_list = json.loads(imagenes_base64)
+
+    
     #imagenes_base64_fila0 = [fila[0] for fila in imagenes_base64]
     #imagenes_base64_fila1 = [fila[1] for fila in imagenes_base64]
 
@@ -48,7 +52,7 @@ def get_imgs_b64(imagen_ref_base64, imagenes_base64):
     #    return imagenes_base64_fila1[indice_max_similitud]
     #else:
     #    return None
-    return imagenes_base64[0]         #("vdeo"+str(1)+".mp4")  
+    return data_list         #("vdeo"+str(1)+".mp4")  
 
 # Función para calcular la similitud entre dos imágenes
 def calcular_similitud(img1, img2):
