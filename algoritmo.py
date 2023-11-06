@@ -8,8 +8,11 @@ def get_imgs_b64(imagen_ref_base64, imagenes_base64):
     #imagenes_base64_fila1 = [fila[1] for fila in imagenes_base64]
 
     #imagenes_referencia = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64_fila0]
+    
+    imagenes_base64_data = [item['image_base64'] for item in imagenes_base64]
 
-
+    imagenes_referencia = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_base64_data]
+    
     #img_encoded = base64.b64decode(imagen_ref_base64)
     #img = cv2.imdecode(np.frombuffer(img_encoded, np.uint8), cv2.IMREAD_COLOR)
 
@@ -21,7 +24,7 @@ def get_imgs_b64(imagen_ref_base64, imagenes_base64):
     #    return imagenes_base64_fila1[indice_max_similitud]
     #else:
     #    return None
-    return imagenes_base64
+    return imagenes_referencia
 
 # Función para calcular la similitud entre dos imágenes
 def calcular_similitud(img1, img2):
