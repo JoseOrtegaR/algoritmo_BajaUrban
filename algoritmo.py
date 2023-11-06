@@ -42,7 +42,7 @@ def get_imgs_b64(imagen_ref_base64, imagenes_base64):
     #    return imagenes_base64_fila1[indice_max_similitud]
     #else:
     #    return None
-    return similitud#imagenes_referencia
+    return "a"#imagenes_referencia
 
 # Función para calcular la similitud entre dos imágenes
 def calcular_similitud(img1, img2):
