@@ -48,7 +48,7 @@ def get_imgs_b64(imagen_ref_base64, imagenes_base64):
     #    return imagenes_base64_fila1[indice_max_similitud]
     #else:
     #    return None
-    return similitud         #("vdeo"+str(1)+".mp4")  
+    return imagenes_base64[0]         #("vdeo"+str(1)+".mp4")  
 
 # Función para calcular la similitud entre dos imágenes
 def calcular_similitud(img1, img2):
