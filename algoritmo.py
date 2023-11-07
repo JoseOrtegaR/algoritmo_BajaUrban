@@ -39,7 +39,7 @@ def get_imgs_b64(imagen_cap_base64, imagenes_ref_base64_json):
     max_similitud = max(similitudes)
     if(max_similitud > 0):
         indice_max_similitud = similitudes.index(max_similitud)  # +1 para que coincida con la imagen
-        return imagenes_ref_base64_titles[indice_max_similitud]
+        return "vdeo" + imagenes_ref_base64_titles[indice_max_similitud]
     else:
         return None
 
