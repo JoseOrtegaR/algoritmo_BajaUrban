@@ -4,36 +4,28 @@ import base64
 import json
 
 def get_imgs_b64(imagen_cap_base64, imagenes_ref_base64_json):
-
     image_cap_base64_data = imagen_cap_base64.split(",")[1]
     image_cap_base64_binary = base64.b64decode(image_cap_base64_data)
     img_cap_base64_decod = cv2.imdecode(np.frombuffer(image_cap_base64_binary, np.uint8), cv2.IMREAD_COLOR)
-
-    # Analizar la cadena JSON
+    
     imagenes_ref_base64 = json.loads(imagenes_ref_base64_json)
-
-    # Inicializar vectores para títulos e imágenes
     imagenes_ref_base64_titles = []
     imagenes_ref_base64_data = []
     
-    # Iterar sobre los elementos y extraer el título y la imagen en base64
     for item in imagenes_ref_base64:
         imagenes_ref_base64_titles.append(item['title'])
         imagenes_ref_base64_data.append(item['image_base64'])
 
     imagenes_ref_base64_decod = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_ref_base64_data]
     
-    #Calcula la similitud con cada imagen de referencia y encuentra la máxima
     similitudes = [calcular_similitud(imagen_ref, img_cap_base64_decod) for imagen_ref in imagenes_ref_base64_decod]
     max_similitud = max(similitudes)
     if(max_similitud > 50):
-        indice_max_similitud = similitudes.index(max_similitud)  # +1 para que coincida con la imagen
+        indice_max_similitud = similitudes.index(max_similitud)  
         return "vdeo" + imagenes_ref_base64_titles[indice_max_similitud]
     else:
         return 0
 
-
-# Función para calcular la similitud entre dos imágenes
 def calcular_similitud(img1, img2):
     sift = cv2.SIFT_create()
 
