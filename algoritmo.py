@@ -37,7 +37,7 @@ def get_imgs_b64(imagen_cap_base64, imagenes_ref_base64_json):
     #Calcula la similitud con cada imagen de referencia y encuentra la máxima
     similitudes = [calcular_similitud(imagen_ref, img_cap_base64_decod) for imagen_ref in imagenes_ref_base64_decod]
     max_similitud = max(similitudes)
-    if(max_similitud > 50):
+    if(max_similitud > 0):
         indice_max_similitud = similitudes.index(max_similitud)  # +1 para que coincida con la imagen
         return indice_max_similitud
     else:
