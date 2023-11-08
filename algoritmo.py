@@ -1,3 +1,8 @@
+import micropip
+async def install_opencv_python():
+    await micropip.install("opencv-python")
+await install_opencv_python()
+
 import cv2
 import numpy as np
 import base64
