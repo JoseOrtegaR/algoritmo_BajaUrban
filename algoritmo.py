@@ -1,7 +1,13 @@
 import micropip
+
 async def install_opencv_python():
     await micropip.install("opencv-python")
-await install_opencv_python()
+
+async def main():
+    await install_opencv_python()
+
+import asyncio
+asyncio.run(main())
 
 import cv2
 import numpy as np
