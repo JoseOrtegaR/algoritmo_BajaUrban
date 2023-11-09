@@ -3,28 +3,32 @@ import json
 import cv2
 import numpy as np
 
-def get_imgs_b64(imagen_cap_base64, imagenes_ref_base64_json):       
-    image_cap_base64_data = imagen_cap_base64.split(",")[1]
-    image_cap_base64_binary = base64.b64decode(image_cap_base64_data)
-    img_cap_base64_decod = cv2.imdecode(np.frombuffer(image_cap_base64_binary, np.uint8), cv2.IMREAD_COLOR)
+def get_imgs_b64(imagen_cap_base64, imagenes_ref_base64_json):
+    try:
+        image_cap_base64_data = imagen_cap_base64.split(",")[1]
+        image_cap_base64_binary = base64.b64decode(image_cap_base64_data)
+        img_cap_base64_decod = cv2.imdecode(np.frombuffer(image_cap_base64_binary, np.uint8), cv2.IMREAD_COLOR)
+        
+        imagenes_ref_base64 = json.loads(imagenes_ref_base64_json)
+        imagenes_ref_base64_titles = []
+        imagenes_ref_base64_data = []
+        
+        for item in imagenes_ref_base64:
+            imagenes_ref_base64_titles.append(item['title'])
+            imagenes_ref_base64_data.append(item['image_base64'])
     
-    imagenes_ref_base64 = json.loads(imagenes_ref_base64_json)
-    imagenes_ref_base64_titles = []
-    imagenes_ref_base64_data = []
-    
-    for item in imagenes_ref_base64:
-        imagenes_ref_base64_titles.append(item['title'])
-        imagenes_ref_base64_data.append(item['image_base64'])
-
-    imagenes_ref_base64_decod = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_ref_base64_data]
-    
-    similitudes = [calcular_similitud(imagen_ref, img_cap_base64_decod) for imagen_ref in imagenes_ref_base64_decod]
-    max_similitud = max(similitudes)
-    if(max_similitud > 10):
-        indice_max_similitud = similitudes.index(max_similitud)  
-        return "vdeo" + imagenes_ref_base64_titles[indice_max_similitud]
-    else:
-        return 0
+        imagenes_ref_base64_decod = [cv2.imdecode(np.frombuffer(base64.b64decode(imagen_base64), np.uint8), cv2.IMREAD_GRAYSCALE) for imagen_base64 in imagenes_ref_base64_data]
+        
+        similitudes = [calcular_similitud(imagen_ref, img_cap_base64_decod) for imagen_ref in imagenes_ref_base64_decod]
+        max_similitud = max(similitudes)
+        if(max_similitud > 10):
+            indice_max_similitud = similitudes.index(max_similitud)  
+            return "vdeo" + imagenes_ref_base64_titles[indice_max_similitud]
+        else:
+            return 0
+    except Exception as e:
+        return 1
+        
 
 def calcular_similitud(img1, img2):
     sift = cv2.SIFT_create()
