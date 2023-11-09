@@ -1,7 +1,5 @@
 import base64
 import json
-# Instala 'opencv-python' usando 'micropip'
-await micropip.install("opencv-python")
 import cv2
 import numpy as np
 
