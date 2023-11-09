@@ -1,7 +1,9 @@
-import cv2
-import numpy as np
 import base64
 import json
+# Instala 'opencv-python' usando 'micropip'
+await micropip.install("opencv-python")
+import cv2
+import numpy as np
 
 def get_imgs_b64(imagen_cap_base64, imagenes_ref_base64_json):
     image_cap_base64_data = imagen_cap_base64.split(",")[1]
