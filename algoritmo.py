@@ -1,9 +1,17 @@
 import base64
 import json
-import cv2
-import numpy as np
+#import cv2
+#import numpy as np
 
-def get_imgs_b64(imagen_cap_base64, imagenes_ref_base64_json):
+async def load_opencv_in_pyodide():
+    await pyodide.loadPackage("micropip")
+    await pyodide.loadPackage("opencv-python")
+    
+async def get_imgs_b64(imagen_cap_base64, imagenes_ref_base64_json):
+    await load_opencv_in_pyodide()
+    pyodide.runPython("import cv2")
+    pyodide.runPython("import numpy as np")
+    
     image_cap_base64_data = imagen_cap_base64.split(",")[1]
     image_cap_base64_binary = base64.b64decode(image_cap_base64_data)
     img_cap_base64_decod = cv2.imdecode(np.frombuffer(image_cap_base64_binary, np.uint8), cv2.IMREAD_COLOR)
